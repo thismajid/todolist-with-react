@@ -2,8 +2,9 @@
   "name": "todolist-backend",
   "version": "0.1.0",
   "private": true,
+  "main": "./src/bin/www.js",
   "scripts": {
-    "start": "cross-env babel-node src/server.js --ignore ./node_modules",
+    "start": "cross-env babel-node src/bin/www.js --ignore ./node_modules",
     "dev": "cross-env DEBUG=express-es6:* nodemon --exec babel-node ."
   },
   "dependencies": {
@@ -12,7 +13,10 @@
     "dotenv": "^10.0.0",
     "errorhandler": "^1.5.1",
     "express": "^4.17.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.16.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",

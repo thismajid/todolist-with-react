@@ -1,3 +1,4 @@
-import corsOptions from './corsOptions';
+import * as corsOptions from './cors.config';
+import * as dbConfig from './db.config'
 
-export { corsOptions };
+export { corsOptions, dbConfig };
