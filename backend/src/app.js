@@ -1,12 +1,10 @@
 import express, { json, urlencoded } from 'express';
 import logger from 'morgan';
-import dotenv from 'dotenv';
 import cors from 'cors';
-import db from './models'
+
+import db from './models';
 import router from './routes';
 import corsOptions from './configs';
-
-dotenv.config();
 
 const app = express();
 

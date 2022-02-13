@@ -1,8 +1,10 @@
 import errorHandler from 'errorhandler';
+import dotenv from 'dotenv';
 
 import app from '../app';
 
 const debug = require('debug')('express-es6:server');
+dotenv.config();
 
 /**
  * Error Handler. Provides full stack - remove for production
