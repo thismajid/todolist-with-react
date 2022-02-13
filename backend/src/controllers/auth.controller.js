@@ -39,7 +39,8 @@ const registerController = async (req, res) => {
       data: createdUserData,
     });
   } catch (err) {
-    throw err;
+    // throw err;
+    console.log(err);
   }
 };
 

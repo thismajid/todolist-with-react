@@ -23,6 +23,18 @@ const Register = ({ history }) => {
     });
   };
 
+  const errorToast = (text) => {
+    toast.error(text, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   const changeHandler = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -38,7 +50,19 @@ const Register = ({ history }) => {
         }, 6000);
       }
     } catch (err) {
-      console.log(err);
+      if (
+        err.response.data.message ===
+        "Duplicate username, please pickup another username"
+      ) {
+        errorToast("Invalid username");
+      } else if (
+        err.response.data.message ===
+        "Duplicate email address, please enter another email address"
+      ) {
+        errorToast("Invalid email");
+      } else {
+        errorToast("Something went wrong ...");
+      }
     }
   };
 
