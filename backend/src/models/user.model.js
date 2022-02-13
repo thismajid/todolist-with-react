@@ -57,6 +57,16 @@ const userModel = (sequelize, Sequelize) => {
   User.beforeCreate(encryptPassword);
   User.beforeUpdate(encryptPassword);
 
+  User.authenticate = async function (username, password) {
+    const user = await User.findOne({ where: { username } });
+
+    if (bcrypt.compareSync(password, user.password)) {
+      return true;
+    }
+
+    return false;
+  };
+
   return User;
 };
 

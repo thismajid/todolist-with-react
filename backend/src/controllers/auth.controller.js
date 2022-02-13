@@ -1,12 +1,15 @@
-import db from '../models';
-
-const User = db.users;
-const Op = db.Sequelize.Op;
+import {
+  findUsername,
+  findEmail,
+  createUser,
+  authenticateUser,
+  generateToken,
+} from '../services/auth.service';
 
 const registerController = async (req, res) => {
   try {
     const { firstname, lastname, email, username, password } = req.body;
-    const usernameFound = await User.findOne({ where: { username } });
+    const usernameFound = await findUsername(username);
     if (usernameFound) {
       return res.status(400).json({
         success: false,
@@ -14,7 +17,7 @@ const registerController = async (req, res) => {
         data: '',
       });
     }
-    const emailFound = await User.findOne({ where: { email } });
+    const emailFound = await findEmail(email);
     if (emailFound) {
       return res.status(400).json({
         success: false,
@@ -29,15 +32,46 @@ const registerController = async (req, res) => {
       username,
       password,
     };
-    const createdUser = await User.create(newUser);
+    const createdUserData = await createUser(newUser);
     return res.status(201).json({
       success: true,
-      message: 'Created user successfully',
-      data: createdUser,
+      message: 'User created successfully',
+      data: createdUserData,
     });
   } catch (err) {
     throw err;
   }
 };
 
-export { registerController };
+const loginController = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    const userFound = await findUsername(username);
+    const matchPassword = await authenticateUser(username, password);
+
+    if (!userFound || !matchPassword) {
+      return res.status(404).json({
+        success: false,
+        message: 'Invalid username/password',
+        data: '',
+      });
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: 'Login successfully',
+      data: {
+        user: userFound,
+        token: generateToken({
+          id: userFound.id,
+          username: userFound.username,
+        }),
+      },
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+
+export { registerController, loginController };
