@@ -1,0 +1,138 @@
+import { useState } from "react";
+import { registerReq } from "../../services/requestService";
+import { toast } from "react-toastify";
+
+const Register = ({ history }) => {
+  const [user, setUser] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    username: "",
+    password: "",
+  });
+
+  const successToast = (text) => {
+    toast.success(text, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
+  const changeHandler = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const submitHandler = async (e) => {
+    try {
+      e.preventDefault();
+      const response = await registerReq(user);
+      if (response) {
+        successToast("Registration successfully");
+        setTimeout(() => {
+          history.push("/login");
+        }, 6000);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <div className="col-4 m-auto mt-5">
+      <form onSubmit={submitHandler}>
+        <div className="mb-3 row">
+          <label htmlFor="firstname" className="col-sm-2 col-form-label">
+            Firstname
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              id="firstname"
+              name="firstname"
+              value={user.firstname}
+              onChange={changeHandler}
+            />
+          </div>
+        </div>
+        <div className="mb-3 row">
+          <label htmlFor="lastname" className="col-sm-2 col-form-label">
+            Lastname
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              id="lastname"
+              name="lastname"
+              value={user.lastname}
+              onChange={changeHandler}
+            />
+          </div>
+        </div>
+        <div className="mb-3 row">
+          <label htmlFor="email" className="col-sm-2 col-form-label">
+            Email
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              id="email"
+              name="email"
+              value={user.email}
+              onChange={changeHandler}
+            />
+          </div>
+        </div>
+        <div className="mb-3 row">
+          <label htmlFor="username" className="col-sm-2 col-form-label">
+            Username
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              id="username"
+              name="username"
+              value={user.username}
+              onChange={changeHandler}
+            />
+          </div>
+        </div>
+        <div className="mb-3 row">
+          <label htmlFor="password" className="col-sm-2 col-form-label">
+            Password
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              name="password"
+              value={user.password}
+              onChange={changeHandler}
+            />
+          </div>
+        </div>
+        <div className="mb-3 row">
+          <div className="col-sm-2"></div>
+          <div className="col-sm-10">
+            <input
+              type="submit"
+              className="btn btn-success mt-3"
+              value="Register"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default Register;
