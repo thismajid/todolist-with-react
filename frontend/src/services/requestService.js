@@ -8,4 +8,12 @@ const registerReq = async (user) => {
   }
 };
 
-export { registerReq };
+const loginReq = async (user) => {
+  try {
+    return await http.post("/auth/login", user);
+  } catch (err) {
+    throw err;
+  }
+};
+
+export { registerReq, loginReq };

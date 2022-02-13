@@ -6,6 +6,7 @@ import Login from "./components/Login/Login";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
       <Switch>
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
-        <Route path="/" exact component={Homepage} />
+        <ProtectedRoute path="/" exact component={Homepage} />
       </Switch>
     </div>
   );
