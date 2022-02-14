@@ -23,10 +23,7 @@ db.sequelize = sequelize;
 db.users = userModel(sequelize, Sequelize);
 db.todos = todoModel(sequelize, Sequelize);
 
-// db.users.hasMany(db.todos, { as: 'todos' });
-// db.todos.belongsTo(db.users, {
-//   foreignKey: 'userId',
-//   as: 'user',
-// });
+db.users.hasMany(db.todos, { as: 'todos' });
+db.todos.belongsTo(db.users, { foreignKey: 'userId', as: 'user' });
 
 export default db;

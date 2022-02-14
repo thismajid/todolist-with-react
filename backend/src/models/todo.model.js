@@ -6,9 +6,9 @@ const todoModel = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      status: {
-        type: Sequelize.ENUM('inprogress', 'completed'),
-        defaultValue: 'inprogress',
+      isCompleted: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
     },
     {
@@ -16,12 +16,6 @@ const todoModel = (sequelize, Sequelize) => {
       tableName: 'todo',
     }
   );
-
-  Todo.associate = (models) => {
-    Todo.belongsTo(models.User, {
-      foreignKey: 'userId',
-    });
-  };
 
   return Todo;
 };

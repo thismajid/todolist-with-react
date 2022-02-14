@@ -3,7 +3,7 @@ import { Router } from 'express';
 import authRouter from './auth.route';
 import todoRouter from './todo.route';
 
-import { extractToken, decodeToken } from '../services/jwt.service';
+import { extractToken, decodeToken } from '../middlewares/authorize.middleware';
 
 const router = Router();
 

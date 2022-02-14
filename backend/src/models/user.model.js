@@ -67,12 +67,6 @@ const userModel = (sequelize, Sequelize) => {
     return false;
   };
 
-  User.associate = (models) => {
-    User.hasMany(models.Todo, {
-      foreignKey: 'todoIds',
-    });
-  };
-
   return User;
 };
 
