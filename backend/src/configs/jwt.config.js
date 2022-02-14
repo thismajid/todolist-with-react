@@ -1,3 +1,6 @@
-const secret = process.env.TOKEN_SECRET;
+const jwtConfig = {
+  secret: process.env.TOKEN_SECRET,
+  expiresIn: process.env.TOKEN_EXPIREDATE,
+};
 
-export default secret;
+export default jwtConfig;

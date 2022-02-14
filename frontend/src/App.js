@@ -1,12 +1,11 @@
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
-import Homepage from "./components/Homepage/Homepage";
+import Todolist from "./components/Todolist/Todolist";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   return (
@@ -26,7 +25,7 @@ function App() {
       <Switch>
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
-        <ProtectedRoute path="/" exact component={Homepage} />
+        <Route path="/" exact component={Todolist} />
       </Switch>
     </div>
   );

@@ -1,7 +1,4 @@
-import jwt from 'jsonwebtoken';
-
 import db from '../models';
-import secret from '../configs/jwt.config';
 
 const User = db.users;
 const Op = db.Sequelize.Op;
@@ -38,8 +35,4 @@ const authenticateUser = async (username, password) => {
   }
 };
 
-const generateToken = (payload) => {
-  return jwt.sign(payload, secret);
-};
-
-export { findUsername, findEmail, createUser, authenticateUser, generateToken };
+export { findUsername, findEmail, createUser, authenticateUser };

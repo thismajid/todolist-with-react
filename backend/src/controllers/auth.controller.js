@@ -3,8 +3,8 @@ import {
   findEmail,
   createUser,
   authenticateUser,
-  generateToken,
 } from '../services/auth.service';
+import { generateToken } from '../services/jwt.service';
 
 const registerController = async (req, res) => {
   try {
