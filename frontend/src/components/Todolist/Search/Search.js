@@ -1,8 +1,8 @@
 import { FiSearch } from "react-icons/fi";
 
-const Search = () => {
+const Search = ({ searchHandler }) => {
   return (
-    <div className="col-6 m-auto">
+    <div className="col-3 m-auto">
       <form>
         <div className="input-group flex-nowrap">
           <span className="input-group-text" id="addon-wrapping">
@@ -11,9 +11,11 @@ const Search = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="search ..."
+            placeholder="Search ..."
             aria-label="Search"
             aria-describedby="addon-wrapping"
+            name="search"
+            onChange={searchHandler}
           />
         </div>
       </form>

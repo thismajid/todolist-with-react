@@ -6,9 +6,9 @@ const todoModel = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      isCompleted: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+      status: {
+        type: Sequelize.ENUM('progress', 'completed'),
+        defaultValue: 'progress',
       },
     },
     {

@@ -2,6 +2,7 @@ import { findSingleTodo } from '../services/todo.service';
 
 const checkTodoExist = async (req, res, next) => {
   try {
+    console.log(req.body);
     const { id } = req.user;
     const { todoId } = req.body;
     const todo = await findSingleTodo(todoId);

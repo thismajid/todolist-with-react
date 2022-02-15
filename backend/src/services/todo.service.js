@@ -11,9 +11,13 @@ const createTodo = async (newTodo) => {
   }
 };
 
-const findTodo = async (userId) => {
+const findTodo = async (userId, status) => {
   try {
-    return await Todo.findAll({ where: { userId } });
+    if (status) {
+      return await Todo.findAll({ where: { userId, status } });
+    } else {
+      return await Todo.findAll({ where: { userId } });
+    }
   } catch (err) {
     throw err;
   }
@@ -51,7 +55,7 @@ const changeTodoStatus = async (todoId) => {
   try {
     const todo = await findSingleTodo(todoId);
     return await Todo.update(
-      { isCompleted: !todo.isCompleted },
+      { status: todo.status === 'progress' ? 'completed' : 'progress' },
       { where: { id: todoId } }
     );
   } catch (err) {}

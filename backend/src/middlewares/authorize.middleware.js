@@ -5,6 +5,7 @@ import jwtConfig from '../configs/jwt.config';
 const extractToken = (req, res, next) => {
   req.user = {};
   const headers = req.headers.authorization;
+  console.log(req.headers.authorization);
   if (headers && headers.split(' ')[0] === 'Bearer') {
     req.user.token = headers.split(' ')[1];
     next();

@@ -1,34 +1,55 @@
-const Todos = () => {
+const Todos = ({
+  todos,
+  changeStatus,
+  updateDescription,
+  deleteTodo,
+  showModal,
+}) => {
   return (
     <div className="m-auto col-6">
-      <table class="table">
+      <table className="table">
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Description</th>
+            <th scope="col">Status</th>
+            <th scope="col">Operations</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
+          {todos ? (
+            todos.map((todo, index) => {
+              return (
+                <tr key={todo.id}>
+                  <th scope="row" onClick={() => changeStatus(todo.id)}>
+                    {index + 1}
+                  </th>
+                  <td onClick={() => changeStatus(todo.id)}>
+                    {todo.description}
+                  </td>
+                  <td>{todo.status}</td>
+                  <td>
+                    <button
+                      className="btn btn-primary me-3"
+                      onClick={() => showModal(todo.id)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => deleteTodo(todo.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })
+          ) : (
+            <tr>
+              <th colSpan="3">Loading ...</th>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

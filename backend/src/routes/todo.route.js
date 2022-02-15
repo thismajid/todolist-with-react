@@ -6,6 +6,7 @@ import {
   deleteTodo,
   editTodo,
   editTodoStatus,
+  getSingleTodo,
 } from '../controllers/todo.controller';
 
 import { checkTodoExist } from '../middlewares/todo.middleware';
@@ -13,6 +14,8 @@ import { checkTodoExist } from '../middlewares/todo.middleware';
 const todoRouter = Router();
 
 todoRouter.get('/', getTodos);
+
+todoRouter.get('/:todoId', getSingleTodo);
 
 todoRouter.post('/', addTodo);
 
