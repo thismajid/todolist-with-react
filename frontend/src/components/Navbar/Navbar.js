@@ -36,6 +36,7 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
+
           <span className="navbar-text">
             <Link to="/" className="nav-link">
               Todolist

@@ -1,10 +1,7 @@
-const Todos = ({
-  todos,
-  changeStatus,
-  updateDescription,
-  deleteTodo,
-  showModal,
-}) => {
+import { GrUpdate } from "react-icons/gr";
+import { BsFillTrashFill } from "react-icons/bs";
+
+const Todos = ({ todos, changeStatus, deleteTodo, showModal }) => {
   return (
     <div className="m-auto col-6">
       <table className="table">
@@ -33,13 +30,13 @@ const Todos = ({
                       className="btn btn-primary me-3"
                       onClick={() => showModal(todo.id)}
                     >
-                      Edit
+                      <GrUpdate />
                     </button>
                     <button
                       className="btn btn-danger"
                       onClick={() => deleteTodo(todo.id)}
                     >
-                      Delete
+                      <BsFillTrashFill />
                     </button>
                   </td>
                 </tr>

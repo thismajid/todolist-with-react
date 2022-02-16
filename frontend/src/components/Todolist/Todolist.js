@@ -3,12 +3,13 @@ import Search from "./Search/Search";
 import Todos from "./Todos/Todos";
 import AddTodo from "./AddTodo/AddTodo";
 import SelectStatus from "./SelectStatus/SelectStatus";
-import Modal from "./Modal/Modal";
+import ModalComponent from "./Modal/Modal";
 import {
   getTodosReq,
   changeStatusReq,
   deleteTodoReq,
   getSingleTodoReq,
+  updateTodoReq,
 } from "../../services/requestService";
 
 const Todolist = () => {
@@ -17,7 +18,7 @@ const Todolist = () => {
   const [allTodos, setAllTodos] = useState(null);
   const [todo, setTodo] = useState(null);
   const [searchItem, setSearchItem] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
+  const [show, setShow] = useState(false);
 
   const options = [
     { value: "", label: "All" },
@@ -80,9 +81,12 @@ const Todolist = () => {
     }
   };
 
-  const showModal = async (id) => {
+  const handleClose = () => setShow(false);
+
+  const handleShow = async (id) => {
     try {
-      setIsOpen(true);
+      console.log(id);
+      setShow(true);
       const { data } = await getSingleTodoReq(id);
       setTodo(data.data);
     } catch (err) {
@@ -90,8 +94,20 @@ const Todolist = () => {
     }
   };
 
-  const hideModal = () => {
-    setIsOpen(false);
+  const updateHandler = async (e) => {
+    try {
+      e.preventDefault();
+      const updateDescription = e.target.description.value;
+      const updatedTodo = {
+        todoId: todo.id,
+        description: updateDescription ? updateDescription : todo.description,
+      };
+      await updateTodoReq(updatedTodo);
+      handleClose();
+      getTodos();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -105,14 +121,19 @@ const Todolist = () => {
         />
       </div>
 
-      <Modal isOpen={isOpen} setIsOpen={setIsOpen} todo={todo} />
+      <ModalComponent
+        show={show}
+        handleClose={handleClose}
+        todo={todo}
+        updateHandler={updateHandler}
+      />
 
       <Todos
         todos={todos}
         changeStatus={changeStatusHandler}
         updateDescription={updateDescriptionHandler}
         deleteTodo={deleteHandler}
-        showModal={showModal}
+        showModal={handleShow}
       />
       <AddTodo getTodos={getTodos} />
     </div>

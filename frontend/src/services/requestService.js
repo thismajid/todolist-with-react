@@ -56,6 +56,14 @@ const deleteTodoReq = async (todoId) => {
   }
 };
 
+const updateTodoReq = async (updatedTodo) => {
+  try {
+    return await http.put("/todo", updatedTodo);
+  } catch (err) {
+    throw err;
+  }
+};
+
 export {
   registerReq,
   loginReq,
@@ -64,4 +72,5 @@ export {
   deleteTodoReq,
   addTodoReq,
   getSingleTodoReq,
+  updateTodoReq,
 };

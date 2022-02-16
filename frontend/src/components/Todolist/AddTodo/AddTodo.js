@@ -24,25 +24,29 @@ const AddTodo = ({ getTodos }) => {
   return (
     <div className="col-6 m-auto mt-5">
       <form onSubmit={submitHandler}>
-        <div className="mb-3 row">
-          <label htmlFor="description" className="col-sm-2 col-form-label">
-            Description:
-          </label>
-          <div className="col-sm-10">
-            <input
-              type="text"
+        <div className="row align-items-center">
+          <div className="col-3">
+            <label className="col-form-label" for="description">
+              Description:
+            </label>
+          </div>
+          <div className="col-6">
+            <textarea
               className="form-control"
               id="description"
               name="description"
               value={todo.description}
               onChange={changeHandler}
-            />
+            ></textarea>
           </div>
-        </div>
-        <div className="mb-3 row">
-          <div className="col-sm-2"></div>
-          <div className="col-sm-10">
-            <input type="submit" className="btn btn-success mt-2" value="Add" />
+          <div className="col-auto">
+            <span className="form-text">
+              <input
+                type="submit"
+                className="btn btn-success ms-5"
+                value="Add"
+              />
+            </span>
           </div>
         </div>
       </form>
