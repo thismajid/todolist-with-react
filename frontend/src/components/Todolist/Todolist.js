@@ -11,6 +11,7 @@ import {
   getSingleTodoReq,
   updateTodoReq,
 } from "../../services/requestService";
+import { Toast, successToast, errorToast } from "../Toast/Toast";
 
 const Todolist = () => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -38,7 +39,7 @@ const Todolist = () => {
       setTodos(data.data);
       setAllTodos(data.data);
     } catch (err) {
-      console.log(err);
+      errorToast("Error is get todos");
     }
   };
 
@@ -62,22 +63,22 @@ const Todolist = () => {
   const changeStatusHandler = async (id) => {
     try {
       await changeStatusReq(id);
+      successToast("Todo's status changed successfully");
       getTodos();
     } catch (err) {
-      console.log(err);
+      errorToast();
     }
-  };
-
-  const updateDescriptionHandler = async (id) => {
-    console.log(id);
   };
 
   const deleteHandler = async (id) => {
     try {
-      await deleteTodoReq(id);
-      getTodos();
+      if (window.confirm("Are you wanna delete this todo ?!") == true) {
+        await deleteTodoReq(id);
+        successToast("Todo deleted successfully");
+        getTodos();
+      }
     } catch (err) {
-      console.log(err.message.data);
+      errorToast();
     }
   };
 
@@ -85,12 +86,11 @@ const Todolist = () => {
 
   const handleShow = async (id) => {
     try {
-      console.log(id);
       setShow(true);
       const { data } = await getSingleTodoReq(id);
       setTodo(data.data);
     } catch (err) {
-      console.log(err);
+      errorToast();
     }
   };
 
@@ -102,41 +102,44 @@ const Todolist = () => {
         todoId: todo.id,
         description: updateDescription ? updateDescription : todo.description,
       };
+      successToast("Todo updated successfully");
       await updateTodoReq(updatedTodo);
       handleClose();
       getTodos();
     } catch (err) {
-      console.log(err);
+      errorToast();
     }
   };
 
   return (
-    <div className="mt-5">
-      <div className="d-flex justify-content-around m-auto col-8">
-        <Search searchHandler={searchHandler} />
-        <SelectStatus
-          options={options}
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
+    <>
+      <Toast />
+      <div className="mt-5">
+        <div className="d-flex justify-content-around m-auto col-8">
+          <Search searchHandler={searchHandler} />
+          <SelectStatus
+            options={options}
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+          />
+        </div>
+
+        <ModalComponent
+          show={show}
+          handleClose={handleClose}
+          todo={todo}
+          updateHandler={updateHandler}
         />
+
+        <Todos
+          todos={todos}
+          changeStatus={changeStatusHandler}
+          deleteTodo={deleteHandler}
+          showModal={handleShow}
+        />
+        <AddTodo getTodos={getTodos} />
       </div>
-
-      <ModalComponent
-        show={show}
-        handleClose={handleClose}
-        todo={todo}
-        updateHandler={updateHandler}
-      />
-
-      <Todos
-        todos={todos}
-        changeStatus={changeStatusHandler}
-        updateDescription={updateDescriptionHandler}
-        deleteTodo={deleteHandler}
-        showModal={handleShow}
-      />
-      <AddTodo getTodos={getTodos} />
-    </div>
+    </>
   );
 };
 

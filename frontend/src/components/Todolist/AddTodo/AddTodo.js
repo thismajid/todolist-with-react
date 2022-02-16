@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { addTodoReq } from "../../../services/requestService";
+import { successToast, errorToast } from "../../Toast/Toast";
 
 const AddTodo = ({ getTodos }) => {
   const [todo, setTodo] = useState({ description: "" });
@@ -13,11 +14,12 @@ const AddTodo = ({ getTodos }) => {
     try {
       if (todo) {
         await addTodoReq(todo);
+        successToast("Todo added successfully");
         getTodos();
         setTodo({ description: "" });
       }
     } catch (err) {
-      console.log(err);
+      errorToast();
     }
   };
 
@@ -26,7 +28,7 @@ const AddTodo = ({ getTodos }) => {
       <form onSubmit={submitHandler}>
         <div className="row align-items-center">
           <div className="col-3">
-            <label className="col-form-label" for="description">
+            <label className="col-form-label" htmlFor="description">
               Description:
             </label>
           </div>

@@ -1,4 +1,20 @@
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+
+const Toast = () => {
+  return (
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />
+  );
+};
 
 const successToast = (text) => {
   toast.success(text, {
@@ -12,7 +28,7 @@ const successToast = (text) => {
   });
 };
 
-const errorToast = (text) => {
+const errorToast = (text = "Something went wrong ...") => {
   toast.error(text, {
     position: "top-right",
     autoClose: 5000,
@@ -24,4 +40,4 @@ const errorToast = (text) => {
   });
 };
 
-export { successToast, errorToast };
+export { Toast, successToast, errorToast };

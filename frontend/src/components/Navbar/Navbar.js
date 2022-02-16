@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ auth, onClickLogout }) => {
   const { pathname } = window.location;
   const registerPage = pathname === "/register" ? true : false;
   return (
@@ -19,22 +19,38 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarText">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link
-                to="/login"
-                className={`${registerPage ? "" : "active"} nav-link`}
-              >
-                Login
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to="/register"
-                className={`${registerPage ? "active" : ""} nav-link`}
-              >
-                Register
-              </Link>
-            </li>
+            {!auth ? (
+              <>
+                <li className="nav-item">
+                  <Link
+                    to="/login"
+                    className={`${registerPage ? "" : "active"} nav-link`}
+                  >
+                    Login
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    to="/register"
+                    className={`${registerPage ? "active" : ""} nav-link`}
+                  >
+                    Register
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <Link
+                    to="/logout"
+                    className="nav-link"
+                    onClick={onClickLogout}
+                  >
+                    Logout
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
 
           <span className="navbar-text">

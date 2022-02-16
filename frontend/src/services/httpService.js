@@ -2,6 +2,8 @@ import axios from "axios";
 
 const access_token = localStorage.getItem("token");
 
+console.log(localStorage.getItem("token"));
+
 axios.defaults.baseURL = "http://localhost:3001/api";
 axios.defaults.headers.common["authorization"] = `Bearer ${access_token}`;
 

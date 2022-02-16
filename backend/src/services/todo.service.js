@@ -13,11 +13,10 @@ const createTodo = async (newTodo) => {
 
 const findTodo = async (userId, status) => {
   try {
-    if (status) {
-      return await Todo.findAll({ where: { userId, status } });
-    } else {
-      return await Todo.findAll({ where: { userId } });
-    }
+    const whereCondition = status
+      ? { where: { userId, status } }
+      : { where: { userId } };
+    return await Todo.findAll(whereCondition, { order: [['id', 'ASC']] });
   } catch (err) {
     throw err;
   }

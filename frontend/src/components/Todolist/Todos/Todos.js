@@ -1,5 +1,4 @@
-import { GrUpdate } from "react-icons/gr";
-import { BsFillTrashFill } from "react-icons/bs";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 const Todos = ({ todos, changeStatus, deleteTodo, showModal }) => {
   return (
@@ -10,6 +9,7 @@ const Todos = ({ todos, changeStatus, deleteTodo, showModal }) => {
             <th scope="col">#</th>
             <th scope="col">Description</th>
             <th scope="col">Status</th>
+            <th score="col">Last Update</th>
             <th scope="col">Operations</th>
           </tr>
         </thead>
@@ -22,21 +22,23 @@ const Todos = ({ todos, changeStatus, deleteTodo, showModal }) => {
                     {index + 1}
                   </th>
                   <td onClick={() => changeStatus(todo.id)}>
-                    {todo.description}
+                    {todo.status === "completed" ? (
+                      <del>{todo.description}</del>
+                    ) : (
+                      todo.description
+                    )}
                   </td>
                   <td>{todo.status}</td>
+                  <td>{new Date(todo.updatedAt).toLocaleDateString()}</td>
                   <td>
                     <button
-                      className="btn btn-primary me-3"
+                      className="btn me-1"
                       onClick={() => showModal(todo.id)}
                     >
-                      <GrUpdate />
+                      <FaEdit className="text-primary" />
                     </button>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => deleteTodo(todo.id)}
-                    >
-                      <BsFillTrashFill />
+                    <button className="btn" onClick={() => deleteTodo(todo.id)}>
+                      <FaTrashAlt className="text-danger" />
                     </button>
                   </td>
                 </tr>
