@@ -67,6 +67,13 @@ const userModel = (sequelize, Sequelize) => {
     return false;
   };
 
+  User.prototype.toJSON = function () {
+    const user = Object.assign({}, this.get());
+
+    delete user.password;
+    return user;
+  };
+
   return User;
 };
 

@@ -1,15 +1,15 @@
 import "./App.css";
+import { useEffect, useState } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import jwt_decode from "jwt-decode";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Redirecting from "./components/Redirecting";
 import Navbar from "./components/Navbar/Navbar";
-import Todolist from "./components/Todolist/Todolist";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
+import Todolist from "./components/Todolist/Todolist";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
-import { Switch, Route, Redirect } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
-import Redirecting from "./components/Redirecting";
-import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -17,14 +17,24 @@ function App() {
     token && token.length > 0
   );
 
-  const onClickLogout = (e) => {
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    if (token) setUser(jwt_decode(token));
+  }, []);
+
+  const onClickLogout = () => {
     setIsAuthenticated(false);
     localStorage.clear();
   };
 
   return (
     <div className="App">
-      <Navbar onClickLogout={onClickLogout} auth={isAuthenticated}></Navbar>
+      <Navbar
+        onClickLogout={onClickLogout}
+        auth={isAuthenticated}
+        user={user}
+      ></Navbar>
 
       <Switch>
         <Route
@@ -34,7 +44,11 @@ function App() {
               {isAuthenticated ? (
                 <Redirecting to="/" />
               ) : (
-                <Login {...props} setIsAuthenticated={setIsAuthenticated} />
+                <Login
+                  {...props}
+                  setIsAuthenticated={setIsAuthenticated}
+                  setUserInfo={setUser}
+                />
               )}
             </>
           )}

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { registerReq } from "../../services/requestService";
 import { Toast, successToast, errorToast } from "../Toast/Toast";
+import { registerReq } from "../../services/requestService";
 
 const Register = ({ history }) => {
   const [user, setUser] = useState({
@@ -23,7 +23,7 @@ const Register = ({ history }) => {
         successToast("Registration successfully");
         setTimeout(() => {
           history.push("/login");
-        }, 6000);
+        }, 3000);
       }
     } catch (err) {
       if (

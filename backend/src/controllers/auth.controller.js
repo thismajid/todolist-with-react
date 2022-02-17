@@ -59,6 +59,8 @@ const loginController = async (req, res) => {
       });
     }
 
+    console.log(userFound);
+
     return res.status(200).json({
       success: true,
       message: 'Login successfully',
@@ -66,7 +68,8 @@ const loginController = async (req, res) => {
         user: userFound,
         token: generateToken({
           id: userFound.id,
-          username: userFound.username,
+          firstname: userFound.firstname,
+          lastname: userFound.lastname,
         }),
       },
     });

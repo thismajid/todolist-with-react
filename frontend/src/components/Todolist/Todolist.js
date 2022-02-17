@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import Search from "./Search/Search";
+import SelectStatus from "./SelectStatus/SelectStatus";
 import Todos from "./Todos/Todos";
 import AddTodo from "./AddTodo/AddTodo";
-import SelectStatus from "./SelectStatus/SelectStatus";
 import ModalComponent from "./Modal/Modal";
+import { Toast, successToast, errorToast } from "../Toast/Toast";
 import {
   getTodosReq,
   changeStatusReq,
@@ -11,7 +12,6 @@ import {
   getSingleTodoReq,
   updateTodoReq,
 } from "../../services/requestService";
-import { Toast, successToast, errorToast } from "../Toast/Toast";
 
 const Todolist = () => {
   const [selectedOption, setSelectedOption] = useState(null);

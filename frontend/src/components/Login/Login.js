@@ -2,7 +2,7 @@ import { useState } from "react";
 import { loginReq } from "../../services/requestService";
 import { Toast, successToast, errorToast } from "../Toast/Toast";
 
-const Login = ({ history, setIsAuthenticated }) => {
+const Login = ({ setIsAuthenticated, setUserInfo }) => {
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -18,10 +18,11 @@ const Login = ({ history, setIsAuthenticated }) => {
       const { data } = await loginReq(user);
       if (data) {
         localStorage.setItem("token", `${data.data.token}`);
+        setUserInfo(data.data.user);
         successToast("Login successfully");
         setTimeout(() => {
           setIsAuthenticated(true);
-        }, 6000);
+        }, 3000);
       }
     } catch (err) {
       if (err.response.data.message === "Invalid username/password") {
