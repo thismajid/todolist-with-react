@@ -5,42 +5,40 @@ import {
   authenticateUser,
 } from '../services/auth.service';
 import { generateToken } from '../services/jwt.service';
+import SendResponse from '../utils/sendResponse.util';
+
+const sendResponse = new SendResponse();
 
 const registerController = async (req, res) => {
   try {
     const { firstname, lastname, email, username, password } = req.body;
     const usernameFound = await findUsername(username);
     if (usernameFound) {
-      return res.status(400).json({
-        success: false,
-        message: 'Duplicate username, please pickup another username',
-        data: '',
-      });
+      return sendResponse
+        .setError(400, 'Duplicate username, please pickup another username')
+        .send(res);
     }
     const emailFound = await findEmail(email);
     if (emailFound) {
-      return res.status(400).json({
-        success: false,
-        message: 'Duplicate email address, please enter another email address',
-        data: '',
-      });
+      return sendResponse
+        .setError(
+          400,
+          'Duplicate email address, please enter another email address'
+        )
+        .send(res);
     }
-    const newUser = {
+    const newUser = await createUser({
       firstname,
       lastname,
       email,
       username,
       password,
-    };
-    const createdUserData = await createUser(newUser);
-    return res.status(201).json({
-      success: true,
-      message: 'User created successfully',
-      data: createdUserData,
     });
+    return sendResponse
+      .setSuccess(201, 'User created successfully', newUser)
+      .send(res);
   } catch (err) {
-    // throw err;
-    console.log(err);
+    sendResponse.setError(400, err.message).send(res);
   }
 };
 
@@ -52,29 +50,21 @@ const loginController = async (req, res) => {
     const matchPassword = await authenticateUser(username, password);
 
     if (!userFound || !matchPassword) {
-      return res.status(404).json({
-        success: false,
-        message: 'Invalid username/password',
-        data: '',
-      });
+      return sendResponse.setError(404, 'Invalid username/password').send(res);
     }
 
-    console.log(userFound);
-
-    return res.status(200).json({
-      success: true,
-      message: 'Login successfully',
-      data: {
+    return sendResponse
+      .setSuccess(200, 'Login successfully', {
         user: userFound,
         token: generateToken({
           id: userFound.id,
           firstname: userFound.firstname,
           lastname: userFound.lastname,
         }),
-      },
-    });
+      })
+      .send(res);
   } catch (err) {
-    throw err;
+    sendResponse.setError(400, err.message).send(res);
   }
 };
 

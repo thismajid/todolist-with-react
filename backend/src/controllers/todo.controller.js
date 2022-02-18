@@ -6,6 +6,9 @@ import {
   changeTodoStatus,
   findSingleTodo,
 } from '../services/todo.service';
+import SendResponse from '../utils/sendResponse.util';
+
+const sendResponse = new SendResponse();
 
 const addTodo = async (req, res, next) => {
   try {
@@ -15,13 +18,11 @@ const addTodo = async (req, res, next) => {
       description,
       userId: id,
     });
-    return res.status(201).json({
-      success: true,
-      message: 'New todo created successfully',
-      data: newTodo,
-    });
+    return sendResponse
+      .setSuccess(201, 'New todo created successfully', newTodo)
+      .send(res);
   } catch (err) {
-    throw err;
+    return sendResponse.setError(400, err.message).send(res);
   }
 };
 
@@ -30,13 +31,11 @@ const getTodos = async (req, res, next) => {
     const { status } = req.query;
     const { id } = req.user;
     const todos = await findTodo(id, status);
-    return res.status(200).json({
-      success: true,
-      message: 'All todos retrieved successfully',
-      data: todos,
-    });
+    return sendResponse
+      .setSuccess(200, 'All todos retrieved successfully', todos)
+      .send(res);
   } catch (err) {
-    throw err;
+    return sendResponse.setError(400, err.message).send(res);
   }
 };
 
@@ -44,29 +43,23 @@ const getSingleTodo = async (req, res, next) => {
   try {
     const { todoId } = req.params;
     const todo = await findSingleTodo(todoId);
-    return res.status(200).json({
-      success: true,
-      message: `Todo with id=${todo} retrieved successfully`,
-      data: todo,
-    });
+    return sendResponse
+      .setSuccess(200, `Todo with id=${todoId} retrieved successfully`, todo)
+      .send(res);
   } catch (err) {
-    throw err;
+    return sendResponse.setError(400, err.message).send(res);
   }
 };
 
 const deleteTodo = async (req, res, next) => {
   try {
-    console.log(req.body);
     const { todoId } = req.body;
     await removeTodo(todoId);
-    return res.status(200).json({
-      success: true,
-      message: 'This todo deleted successfully',
-      data: '',
-    });
+    return sendResponse
+      .setSuccess(200, `Todo with id=${todoId} deleted successfully`, todo)
+      .send(res);
   } catch (err) {
-    console.log(err);
-    throw err;
+    return sendResponse.setError(400, err.message).send(res);
   }
 };
 
@@ -74,13 +67,15 @@ const editTodo = async (req, res, next) => {
   try {
     const { todoId, description } = req.body;
     await updateTodo(todoId, description);
-    return res.status(200).json({
-      success: true,
-      message: 'Todo description updated successfully',
-      data: '',
-    });
+    return sendResponse
+      .setSuccess(
+        200,
+        `Todo description with id=${todoId} updated successfully`,
+        todo
+      )
+      .send(res);
   } catch (err) {
-    throw err;
+    return sendResponse.setError(400, err.message).send(res);
   }
 };
 
@@ -88,13 +83,15 @@ const editTodoStatus = async (req, res, next) => {
   try {
     const { todoId } = req.body;
     await changeTodoStatus(todoId);
-    return res.status(200).json({
-      success: true,
-      message: 'Todo status updated successfully',
-      data: '',
-    });
+    return sendResponse
+      .setSuccess(
+        200,
+        `Todo status with id=${todoId} updated successfully`,
+        todo
+      )
+      .send(res);
   } catch (err) {
-    throw err;
+    return sendResponse.setError(400, err.message).send(res);
   }
 };
 

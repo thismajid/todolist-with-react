@@ -5,7 +5,8 @@
   "main": "./src/bin/www.js",
   "scripts": {
     "start": "cross-env babel-node src/bin/www.js --ignore ./node_modules",
-    "dev": "cross-env DEBUG=express-es6:* nodemon --exec babel-node ."
+    "dev": "cross-env DEBUG=express-es6:* nodemon --exec babel-node .",
+    "build": "babel ./src -d ./dist"
   },
   "dependencies": {
     "ajv": "^8.10.0",
@@ -26,6 +27,7 @@
     "@babel/core": "^7.16.5",
     "@babel/eslint-parser": "^7.16.5",
     "@babel/node": "^7.7.7",
+    "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.7.7",
     "cross-env": "^6.0.3",
     "eslint": "^8.5.0",
