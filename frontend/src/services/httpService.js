@@ -1,9 +1,13 @@
 import axios from "axios";
 
-const access_token = localStorage.getItem("token");
-
 axios.defaults.baseURL = "http://localhost:3001/api";
-axios.defaults.headers.common["authorization"] = `Bearer ${access_token}`;
+
+axios.interceptors.request.use(function (config) {
+  const token = localStorage.getItem("token");
+  config.headers.Authorization = token;
+
+  return config;
+});
 
 const http = {
   get: axios.get,
