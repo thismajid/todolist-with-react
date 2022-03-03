@@ -1,6 +1,6 @@
 # Todolist
 
-## Backend: Node.js/Express.js || Database: Postgres/Sequelize || Frontend: React
+## Backend: Node.js/Express.js || Database: Mongodb/Mongoose || Frontend: React
 
 ### For Using This Application Run These Commands
 
